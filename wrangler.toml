@@ -1,0 +1,8 @@
+name = "casperleads"
+main = "src/index.js"
+compatibility_date = "2026-08-28"
+
+[[d1_databases]]
+binding = "DB"
+database_name = "casper-leads"
+database_id = "1fb09c98-9056-460b-9e68-6622905cb6c8"
