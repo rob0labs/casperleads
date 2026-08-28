@@ -6,7 +6,7 @@
 // SAFETY: this must stay false unless Cloudflare Access is enforcing on this Worker
 // AND the Access policy names specific people. A policy that allows any email address
 // makes the board self-serve public, emails included.
-const SHOW_EMAILS = false;
+const SHOW_EMAILS = true;
 
 const esc = (s) =>
   String(s ?? "").replace(/[&<>"']/g, (c) =>
