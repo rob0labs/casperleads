@@ -6,10 +6,11 @@
 // SAFETY: this must stay false unless Cloudflare Access is enforcing on this Worker
 // AND the Access policy names specific people. A policy that allows any email address
 // makes the board self-serve public, emails included.
-// Set to false on 11 Sep 2026: Access enforcement could not be verified from the scan
-// session, and the link was about to be shared more widely. Emails live in the Google
-// Sheet, which enforces access by named account.
-const SHOW_EMAILS = false;
+// CONFIRMED 11 Sep 2026 by Robert: Access IS enforcing on this Worker and readers sign
+// in through Cloudflare, so true is correct here. Do not flip this to false again on the
+// assumption that it is unprotected. If you cannot verify Access from a scan session,
+// ask rather than changing it.
+const SHOW_EMAILS = true;
 
 const esc = (s) =>
   String(s ?? "").replace(/[&<>"']/g, (c) =>
@@ -292,7 +293,7 @@ ${
     : ""
 }`;
 
-  return shell("TechBBQ 2026 &middot; Casper Lead Scan", head, body, "/techbbq");
+  return shell("TechBBQ 2026 · Casper Lead Scan", head, body, "/techbbq");
 }
 
 function tbCard(r) {
