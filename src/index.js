@@ -6,7 +6,10 @@
 // SAFETY: this must stay false unless Cloudflare Access is enforcing on this Worker
 // AND the Access policy names specific people. A policy that allows any email address
 // makes the board self-serve public, emails included.
-const SHOW_EMAILS = true;
+// Set to false on 11 Sep 2026: Access enforcement could not be verified from the scan
+// session, and the link was about to be shared more widely. Emails live in the Google
+// Sheet, which enforces access by named account.
+const SHOW_EMAILS = false;
 
 const esc = (s) =>
   String(s ?? "").replace(/[&<>"']/g, (c) =>
@@ -224,7 +227,7 @@ function mainCard(l) {
   if (SHOW_EMAILS && hasEmail) {
     contact += ` &middot; <a href="mailto:${esc(l.email)}">${esc(l.email)}</a>`;
   } else if (hasEmail) {
-    contact += ` &middot; <span class="muted">email held privately</span>`;
+    contact += ` &middot; <span class="muted">email held privately, it is in the Sheet</span>`;
   } else {
     contact += ` &middot; <span class="muted">no email found, LinkedIn is the route</span>`;
   }
@@ -289,7 +292,7 @@ ${
     : ""
 }`;
 
-  return shell("TechBBQ 2026 · Casper Lead Scan", head, body, "/techbbq");
+  return shell("TechBBQ 2026 &middot; Casper Lead Scan", head, body, "/techbbq");
 }
 
 function tbCard(r) {
@@ -325,7 +328,7 @@ function tbCard(r) {
     } else if (SHOW_EMAILS) {
       tail = `<a href="mailto:${esc(r.email)}">${esc(r.email)}</a>`;
     } else {
-      tail = `<span class="muted">email held privately</span>`;
+      tail = `<span class="muted">email held privately, it is in the Sheet</span>`;
     }
     contact = `<p class="contact"><strong>${esc(r.contact)}</strong>${
       r.title ? ", " + esc(r.title) : ""
